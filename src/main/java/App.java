@@ -109,5 +109,16 @@ public class App {
       response.redirect(url);
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
+
+    //update sighting from endangered animal
+    post("/sighting/:sighting_id/update", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Sighting sighting = Sighting.find(Integer.parseInt(request.params("sighting_id")));
+      EndangeredAnimal endangeredAnimal = EndangeredAnimal.find(sighting.getAnimalId());
+
+      String url = String.format("/endangered_animal/%d", endangeredAnimal.getId());
+      response.redirect(url);
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
   }
 }
