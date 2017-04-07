@@ -64,4 +64,42 @@ public class EndangeredAnimalTest {
     assertEquals("Adult", EndangeredAnimal.find(testEndangeredAnimal.getId()).getAge());
   }
 
+  @Test
+  public void EndangeredAnimal_instantiatesWithAge_String() {
+    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Fox", "Healthy", "Young");
+    assertEquals("Young", testEndangeredAnimal.getAge());
+  }
+
+  @Test
+  public void EndangeredAnimal_instantiatesWithName_String() {
+    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Fox", "Healthy", "Young");
+    assertEquals("Fox", testEndangeredAnimal.getName());
+  }
+
+  @Test
+  public void equals_returnsTrueIfNameHealthAndAgeAreSame_true() {
+    EndangeredAnimal firstEndangeredAnimal = new EndangeredAnimal("Fox", "Healthy", "Young");
+    EndangeredAnimal secondEndangeredAnimal = new EndangeredAnimal("Fox", "Healthy", "Young");
+    assertTrue(firstEndangeredAnimal.equals(secondEndangeredAnimal));
+  }
+
+  @Test
+  public void save_returnsTrueIfEndangeredAnimalsAreTheSame() {
+    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Fox", "Healthy", "Young");
+    testEndangeredAnimal.save();
+    assertTrue(EndangeredAnimal.all().get(0).equals(testEndangeredAnimal));
+  }
+
+  @Test
+  public void getSightings_returnsAllSightings_List() {
+    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Fox", "Healthy", "Young");
+    testEndangeredAnimal.save();
+    Sighting firstSighting = new Sighting(testEndangeredAnimal.getId(), "45.472428, -121.946466", "Ranger Avery");
+    firstSighting.save();
+    Sighting secondSighting = new Sighting(testEndangeredAnimal.getId(), "45.472428, -121.946466", "Ranger Avery");
+    secondSighting.save();
+    Sighting[] sightings = new Sighting[] { firstSighting, secondSighting };
+    assertTrue(testEndangeredAnimal.getSightings().containsAll(Arrays.asList(sightings)));
+  }
+
 }
