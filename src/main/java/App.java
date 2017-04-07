@@ -27,10 +27,8 @@ public class App {
       String latLong = request.queryParams("latLong");
       Sighting sighting = new Sighting(endangeredAnimal.getId(), latLong, rangerName);
       sighting.save();
-      model.put("sighting", sighting);
-      model.put("animals", EndangeredAnimal.all());
-      model.put("endangeredAnimal", endangeredAnimal);
-      model.put("template", "templates/endangered_animal.vtl");
+      String url = String.format("/endangered_animal/%d", endangeredAnimal.getId());
+      response.redirect(url);
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -98,6 +96,17 @@ public class App {
     get("/error", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("template", "templates/error.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    //remove sighting from endangered animal
+    post("/sighting/:sighting_id/delete", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Sighting sighting = Sighting.find(Integer.parseInt(request.params("sighting_id")));
+      EndangeredAnimal endangeredAnimal = EndangeredAnimal.find(sighting.getAnimalId());
+      sighting.delete();
+      String url = String.format("/endangered_animal/%d", endangeredAnimal.getId());
+      response.redirect(url);
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
   }
