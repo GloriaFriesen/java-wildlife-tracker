@@ -2,7 +2,7 @@ import org.sql2o.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EndangeredAnimal {
+public class EndangeredAnimal implements DatabaseManagement {
   public String name;
   public int id;
   public boolean endangered;
@@ -42,6 +42,7 @@ public class EndangeredAnimal {
     }
   }
 
+  @Override
   public void save() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "INSERT INTO endangered_animals (name, health, age) VALUES (:name, :health, :age);";
@@ -102,5 +103,13 @@ public class EndangeredAnimal {
     }
   }
 
-
+  @Override
+  public void delete() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "DELETE FROM endangered_animals WHERE id=:id";
+      con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
 }

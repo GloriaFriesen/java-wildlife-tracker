@@ -102,4 +102,12 @@ public class EndangeredAnimalTest {
     assertTrue(testEndangeredAnimal.getSightings().containsAll(Arrays.asList(sightings)));
   }
 
+  @Test
+  public void delete_deletesEndangeredAnimal_true() {
+    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Fox", "Healthy", "Young");
+    testEndangeredAnimal.save();
+    testEndangeredAnimal.delete();
+    assertEquals(null, EndangeredAnimal.find(testEndangeredAnimal.getId()));
+  }
+
 }
