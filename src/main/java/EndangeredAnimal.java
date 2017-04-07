@@ -28,6 +28,7 @@ public class EndangeredAnimal implements DatabaseManagement {
     return name;
   }
 
+  @Override
   public int getId() {
     return id;
   }

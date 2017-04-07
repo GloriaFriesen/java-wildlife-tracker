@@ -16,6 +16,7 @@ public class Sighting implements DatabaseManagement {
     this.id = id;
   }
 
+  @Override
   public int getId() {
     return id;
   }

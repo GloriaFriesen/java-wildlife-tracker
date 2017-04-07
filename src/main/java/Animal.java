@@ -2,7 +2,7 @@ import org.sql2o.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Animal implements DatabaseManagement {
+public class Animal implements AnimalGetterMethods {
   public String name;
   public int id;
 
@@ -15,6 +15,7 @@ public class Animal implements DatabaseManagement {
     return name;
   }
 
+  @Override
   public int getId() {
     return id;
   }
