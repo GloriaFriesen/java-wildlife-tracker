@@ -6,8 +6,15 @@ public class EndangeredAnimal implements DatabaseManagement {
   public String name;
   public int id;
   public boolean endangered;
-  private String health;
-  private String age;
+  public String health;
+  public String age;
+
+  public static final String HIGH_HEALTH = "Healthy";
+  public static final String MEDIUM_HEALTH = "Okay";
+  public static final String LOW_HEALTH = "Ill";
+  public static final String HIGH_AGE = "Old";
+  public static final String MEDIUM_AGE = "Young";
+  public static final String LOW_AGE = "Newborn";
 
   public EndangeredAnimal(String name, String health, String age) {
     this.name = name;

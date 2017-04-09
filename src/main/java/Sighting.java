@@ -3,6 +3,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.sql.Timestamp;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class Sighting implements DatabaseManagement {
   private int animal_id;
@@ -92,6 +94,13 @@ public class Sighting implements DatabaseManagement {
 
   public Timestamp getTimeSeen() {
     return time_seen;
+  }
+
+  public String getFormattedTime() {
+    Date date = new Date();
+    date.setTime(time_seen.getTime());
+    String formattedDate = new SimpleDateFormat("EEE, d MMM yyyy hh:mm aaa").format(date);
+    return formattedDate;
   }
 
 }

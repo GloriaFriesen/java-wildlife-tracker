@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.text.DateFormat;
 import java.util.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class SightingTest {
 
@@ -121,4 +122,17 @@ public class SightingTest {
     assertEquals(rightNow.getDay(), savedTimeSeen.getDay());
   }
 
+  @Test
+  public void getFormattedTime_changesTimeFormat() {
+    Animal testAnimal = new Animal("Deer");
+    Sighting testSighting = new Sighting (testAnimal.getId(), "45.472428, -121.946466", "Ranger Avery");
+    testSighting.save();
+    String sightingTime = Sighting.find(testSighting.getId()).getFormattedTime();
+    Date date = new Date();
+    String formattedDate = new SimpleDateFormat("EEE, d MMM yyyy hh:mm aaa").format(date);
+    assertEquals(formattedDate, sightingTime);
+
+
+
+  }
 }

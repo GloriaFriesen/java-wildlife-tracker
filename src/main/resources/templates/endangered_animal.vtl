@@ -17,7 +17,7 @@
 #if ($endangeredAnimal.getSightings().size() > 0)
   #foreach($sighting in $endangeredAnimal.getSightings())
     <div class="well">
-      <h4>When: $sighting.getTimeSeen()</h4>
+      <h4>When: $sighting.getFormattedTime()</h4>
       <h4>Location: $sighting.getLocation()</h4>
       <h4>Health: $endangeredAnimal.getHealth()</h4>
       <h4>Age: $endangeredAnimal.getAge()</h4>
