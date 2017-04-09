@@ -1,9 +1,7 @@
 <h4><a href="/">Home</a></h4>
 
-<div class="well">
-  <h1>$endangeredAnimal.getName()</h1>
-  <h4>Total Sightings: $endangeredAnimal.getSightings().size()
-</div>
+<h1>$endangeredAnimal.getName()</h1>
+<h4>Total Sightings: $endangeredAnimal.getSightings().size()
 
 <form action="/endangered_sighting" method="post" class="addSighting">
   <input name="endangeredAnimalSelected" type="hidden" value="$endangeredAnimal.getId()">

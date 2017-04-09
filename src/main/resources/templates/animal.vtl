@@ -1,9 +1,8 @@
 <h4><a href="/">Home</a></h4>
 
-<div class="well">
-  <h1>$animal.getName()</h1>
-  <h4>Total Sightings: $animal.getSightings().size()
-</div>
+<h1>$animal.getName()</h1>
+<h4>Total Sightings: $animal.getSightings().size()
+
 
 <form action="/animal_sighting" method="post" class="addSighting">
   <input name="animalSelected" type="hidden" value="$animal.getId()">

@@ -1,5 +1,9 @@
-form.addSighting {
-  border: 2px solid grey;
-  padding: 5px;
-  border-radius: 5px;
+body {
+  background: url("/images/background.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+.title {
+  background-color: lightgrey;
+  border: 2px;
 }
