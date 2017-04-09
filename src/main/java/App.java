@@ -20,6 +20,7 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    //add endangered animal sighting
     post("/endangered_sighting", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       String rangerName = request.queryParams("rangerName");
@@ -32,18 +33,16 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    post("/sighting", (request, response) -> {
+    //add animal sighting
+    post("/animal_sighting", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       String rangerName = request.queryParams("rangerName");
       int animalIdSelected = Integer.parseInt(request.queryParams("animalSelected"));
       String latLong = request.queryParams("latLong");
       Sighting sighting = new Sighting(animalIdSelected, latLong, rangerName);
       sighting.save();
-      model.put("sighting", sighting);
-      model.put("animals", Animal.all());
-      String animal = Animal.find(animalIdSelected).getName();
-      model.put("animal", animal);
-      model.put("template", "templates/success.vtl");
+      String url = String.format("/animal/%d", animalIdSelected);
+      response.redirect(url);
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -100,12 +99,23 @@ public class App {
     }, new VelocityTemplateEngine());
 
     //remove sighting from endangered animal
-    post("/sighting/:sighting_id/delete", (request, response) -> {
+    post("/endangered_animal/sighting/:sighting_id/delete", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       Sighting sighting = Sighting.find(Integer.parseInt(request.params("sighting_id")));
       EndangeredAnimal endangeredAnimal = EndangeredAnimal.find(sighting.getAnimalId());
       sighting.delete();
       String url = String.format("/endangered_animal/%d", endangeredAnimal.getId());
+      response.redirect(url);
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    //remove sighting from animal
+    post("/animal/sighting/:sighting_id/delete", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Sighting sighting = Sighting.find(Integer.parseInt(request.params("sighting_id")));
+      Animal animal = Animal.find(sighting.getAnimalId());
+      sighting.delete();
+      String url = String.format("/animal/%d", animal.getId());
       response.redirect(url);
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());

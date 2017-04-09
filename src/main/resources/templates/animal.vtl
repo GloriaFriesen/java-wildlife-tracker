@@ -1,14 +1,28 @@
 <h4><a href="/">Home</a></h4>
 
-<h1>$animal.getName()</h1>
-<h3>ID: $animal.getId()</h3>
+<div class="well">
+  <h1>$animal.getName()</h1>
+  <h4>Total Sightings: $animal.getSightings().size()
+</div>
 
-#if($animal.getSightings().size() == 0)
-  <p>To report a sighting, please visit the <a href="/">home page</a>.</p>
-#else
+<form action="/animal_sighting" method="post" class="addSighting">
+  <input name="animalSelected" type="hidden" value="$animal.getId()">
+  <label>Location</label>
+  <input type="text" name="latLong" class="form-control">
+  <label>Your Name</label>
+  <input type="text" name="rangerName" class="form-control">
+  <button class="btn btn-default" type="submit">Report Sighting</button>
+</form>
+
+#if ($animal.getSightings().size() > 0)
   #foreach($sighting in $animal.getSightings())
-    Location: $sighting.getLocation()
-    Reported by: $sighting.getRangerName()
-    ID: >$sighting.getId()
+    <div class="well">
+      <h4>When: $sighting.getFormattedTime()</h4>
+      <h4>Location: $sighting.getLocation()</h4>
+      <h4>Reported by: $sighting.getRangerName()</h4>
+      <form action="/animal/sighting/$sighting.getId()/delete" method="post">
+        <button class="btn btn-default" type="submit">Remove Sighting</button>
+      </form>
+    </div>
   #end
 #end
