@@ -84,15 +84,17 @@ public class App {
     get("/animal/:id", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       Animal animal = Animal.find(Integer.parseInt(request.params("id")));
+      model.put("animals", Animal.all());
       model.put("animal", animal);
       model.put("template", "templates/animal.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
     //view endangered animal
-    get("/endangered_animal/:id", (request, response) -> {
+    get("/endangered_animal/:endangered_animal_id", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
-      EndangeredAnimal endangeredAnimal = EndangeredAnimal.find(Integer.parseInt(request.params("id")));
+      EndangeredAnimal endangeredAnimal = EndangeredAnimal.find(Integer.parseInt(request.params("endangered_animal_id")));
+      model.put("endangeredAnimals", EndangeredAnimal.all());
       model.put("endangeredAnimal", endangeredAnimal);
       model.put("template", "templates/endangered_animal.vtl");
       return new ModelAndView(model, layout);
@@ -139,7 +141,7 @@ public class App {
     }, new VelocityTemplateEngine());
 
     //update sighting from endangered animal
-    post("/sighting/:sighting_id/update", (request, response) -> {
+    post("/endangered_animal/sighting/:sighting_id/update", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       Sighting sighting = Sighting.find(Integer.parseInt(request.params("sighting_id")));
       int animalId = Integer.parseInt(request.queryParams("animalId"));
@@ -147,7 +149,21 @@ public class App {
       String rangerName = request.queryParams("rangerName");
       sighting.update(animalId, location, rangerName);
       EndangeredAnimal endangeredAnimal = EndangeredAnimal.find(sighting.getAnimalId());
-      String url = String.format("/endangered_animal/%d", endangeredAnimal.getId());
+      String url = String.format("/endangered_animal/%d", animalId);
+      response.redirect(url);
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    //update sighting from animal
+    post("/animal/sighting/:sighting_id/update", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Sighting sighting = Sighting.find(Integer.parseInt(request.params("sighting_id")));
+      int animalId = Integer.parseInt(request.queryParams("animalId"));
+      String location = request.queryParams("location");
+      String rangerName = request.queryParams("rangerName");
+      sighting.update(animalId, location, rangerName);
+      Animal animal = Animal.find(sighting.getAnimalId());
+      String url = String.format("/animal/%d", animalId);
       response.redirect(url);
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());

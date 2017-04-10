@@ -1,4 +1,4 @@
-<h4><a href="/">Home</a></h4>
+<h3><a href="/">Home</a></h3>
 
 <h1>$animal.getName()</h1>
 <h4>Total Sightings: $animal.getSightings().size()
@@ -21,12 +21,42 @@
 #if ($animal.getSightings().size() > 0)
   #foreach($sighting in $animal.getSightings())
     <div class="well">
-      <h4>When: $sighting.getFormattedTime()</h4>
-      <h4>Location: $sighting.getLocation()</h4>
-      <h4>Reported by: $sighting.getRangerName()</h4>
-      <form action="/animal/sighting/$sighting.getId()/delete" method="post">
-        <button class="btn btn-default" type="submit">Remove Sighting</button>
-      </form>
+      <div class="row">
+        <div class="col-md-7">
+          <h2>Sighting</h2>
+          <h4>When: $sighting.getFormattedTime()</h4>
+          <h4>Location: $sighting.getLocation()</h4>
+          <h4>Reported by: $sighting.getRangerName()</h4>
+          <form action="/animal/sighting/$sighting.getId()/delete" method="post">
+            <button class="btn btn-default" type="submit">Remove Sighting</button>
+          </form>
+        </div>
+
+      <div class="col-md-5">
+        <h4>Incorrect Sighting Information?</h4>
+        <form action="/animal/sighting/$sighting.getId()/update" method="post">
+          #if($animals.size() >= 0)
+            <div class="form-group">
+              <label>Update Animal</label>
+              <select name="animalId">
+                #foreach($animal in $animals)
+                  <option value="$animal.getId()">$animal.getName()</option>
+                #end
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Update Location</label>
+              <input type="text" name="location" class="form-control" value="$sighting.getLocation()" required>
+            </div>
+            <div class="form-group">
+              <label>Update Ranger</label>
+              <input type="text" name="rangerName" class="form-control" value="$sighting.getRangerName()" required>
+            </div>
+            <button class="btn btn-default" type="submit">Submit Changes</button>
+          #end
+        </form>
+      </div>
     </div>
+  </div>
   #end
 #end

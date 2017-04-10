@@ -18,3 +18,15 @@ body {
   margin-bottom: 250px;
   position: absolute;
 }
+
+.well {
+  margin-top: 20px;
+}
+
+.col-md-2 {
+  margin-top: 10px;
+}
+
+.btn {
+  margin-top: 10px;
+}
