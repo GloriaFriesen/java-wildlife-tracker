@@ -110,4 +110,8 @@ public class EndangeredAnimalTest {
     assertEquals(null, EndangeredAnimal.find(testEndangeredAnimal.getId()));
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void endangeredAnimal_throwsExceptionIfEndangeredAnimalHasEmptyParameters() {
+    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("", "Healthy", "Young");
+  }
 }

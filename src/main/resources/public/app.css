@@ -12,3 +12,9 @@ body {
   margin-top: 10px;
   text-align: center;
 }
+
+#animal_new {
+  margin-top: 800px;
+  margin-bottom: 250px;
+  position: absolute;
+}

@@ -1,82 +1,98 @@
-<h1>Report a Wildlife Sighting</h1>
+<h1 id="home">Wildlife Tracking Foundation</h1>
 
-<h3><a href="/animal/new">Add Animal to System</a></h3>
+<h3><a href="#animal_new">Add New Animal</a></h3>
 <hr>
 
-<div class="row">
-  <div class="col-md-4">
-    <h3> Report Non-Endangered Animal Sighting </h3>
-    <form action="/animal_sighting" method="post" class="addSighting">
-      #if($animals.size() >= 0)
-        <label>Select Animal</label>
-        <select name="animalSelected">
-          #foreach($animal in $animals)
-            <option value="$animal.getId()">$animal.getName()</option>
-          #end
-        </select>
-
-        <label>Location</label>
-        <input type="text" name="latLong">
-        <label>Your Name</label>
-        <input type="text" name="rangerName">
-        <button type="submit">Submit Report</button>
+<h3> Report Non-Endangered Animal Sighting </h3>
+<form action="/animal_sighting" method="post" class="addSighting">
+  #if($animals.size() >= 0)
+    <label>Select Animal</label>
+    <select name="animalSelected">
+      #foreach($animal in $animals)
+        <option value="$animal.getId()">$animal.getName()</option>
       #end
-    </form>
-  </div>
+    </select>
 
-  <div class="col-md-4">
-    <h3> Report Endangered Animal Sighting </h3>
-    <form action="/endangered_sighting" method="post" class="addSighting">
-      #if($endangeredAnimals.size() >= 0)
-        <label>Select Endangered Animal</label>
-        <select name="endangeredAnimalSelected">
-          #foreach($endangered_animal in $endangeredAnimals)
-            <option value="$endangered_animal.getId()">$endangered_animal.getName()</option>
-          #end
-        </select>
+    <label>Location</label>
+    <input type="text" name="latLong">
+    <label>Your Name</label>
+    <input type="text" name="rangerName">
+    <button type="submit">Submit Report</button>
+  #end
+</form>
 
-        <label>Location</label>
-        <input type="text" name="latLong">
-        <label>Your Name</label>
-        <input type="text" name="rangerName">
-        <button type="submit">Submit Report</button>
+<h3> Report Endangered Animal Sighting </h3>
+<form action="/endangered_sighting" method="post" class="addSighting">
+  #if($endangeredAnimals.size() >= 0)
+    <label>Select Endangered Animal</label>
+    <select name="endangeredAnimalSelected">
+      #foreach($endangered_animal in $endangeredAnimals)
+        <option value="$endangered_animal.getId()">$endangered_animal.getName()</option>
       #end
-    </form>
-  </div>
+    </select>
+
+    <label>Location</label>
+    <input type="text" name="latLong">
+    <label>Your Name</label>
+    <input type="text" name="rangerName">
+    <button type="submit">Submit Report</button>
+  #end
+</form>
+
+<div class="title">
+  <h3>Endangered Animal Sightings</h3>
 </div>
+#if ($endangeredAnimals.size() == 0)
+  <a href="/animal/new">Add Animal to Database to Report a Sighting</a>
+#else
+  #foreach ($endangeredAnimal in $endangeredAnimals)
+    <a href="/endangered_animal/$endangeredAnimal.getId()" class="thumbnail">
+      <h4>$endangeredAnimal.getName()</h4>
+      <h4>$endangeredAnimal.getSightings().size() Reported Sighting(s)</h4>
+      <p>Click for details</p>
+    </a>
+  #end
+#end
 
-<div class="row">
-  <div class="col-md-4">
-    <div class="title">
-      <h3>Endangered Animal Sightings</h3>
-    </div>
-    #if ($endangeredAnimals.size() == 0)
-      <a href="/animal/new">Add Animal to Database to Report a Sighting</a>
-    #else
-      #foreach ($endangeredAnimal in $endangeredAnimals)
-        <a href="/endangered_animal/$endangeredAnimal.getId()" class="thumbnail">
-          <h4>$endangeredAnimal.getName()</h4>
-          <h4>$endangeredAnimal.getSightings().size() Reported Sighting(s)</h4>
-          <p>Click for details</p>
-        </a>
-      #end
-    #end
-  </div>
+<div class="title">
+  <h3>Non-Endangered Animal Sightings</h3>
+</div>
+#if ($animals.size() == 0)
+  <a href="/animal/new">Add Animal to Database to Report a Sighting</a>
+#else
+  #foreach ($animal in $animals)
+    <a href="/animal/$animal.getId()" class="thumbnail">
+      <h4>$animal.getName()</h4>
+      <h4>$animal.getSightings().size() Reported Sighting(s)</h4>
+      <p>Click for details</p>
+    </a>
+  #end
+#end
 
-  <div class="col-md-4">
-    <div class="title">
-      <h3>Non-Endangered Animal Sightings</h3>
-    </div>
-    #if ($animals.size() == 0)
-      <a href="/animal/new">Add Animal to Database to Report a Sighting</a>
-    #else
-      #foreach ($animal in $animals)
-        <a href="/animal/$animal.getId()" class="thumbnail">
-          <h4>$animal.getName()</h4>
-          <h4>$animal.getSightings().size() Reported Sighting(s)</h4>
-          <p>Click for details</p>
-        </a>
-      #end
-    #end
-  </div>
+<hr>
+<div id="animal_new">
+  <footer>
+    <h2>Add Animal to Database</h2>
+    <form action="/animal/new" method="post">
+      <label>Animal Species</label>
+      <input type="text" name="name">
+      <label>Endangered?</label>
+      <input type="checkbox" name="endangered">
+      <h3>Additional Info for Endangered Animals:</h3>
+      <label>Health</label>
+      <select name="health">
+        <option>Ill</option>
+        <option>Okay</option>
+        <option>Healthy</option>
+      </select>
+      <label>Age</label>
+      <select name="age">
+        <option>Newborn</option>
+        <option>Young</option>
+        <option>Adult</option>
+      </select>
+      <button type="submit">Add Animal</button>
+    </form>
+    <a href="#home">Back to Top</a>
+  </footer>
 </div>

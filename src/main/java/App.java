@@ -56,15 +56,6 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    //add animal form
-    get("/animal/new", (request, response) -> {
-      Map<String, Object> model = new HashMap<String, Object>();
-      model.put("animals", Animal.all());
-      model.put("endangeredAnimals", EndangeredAnimal.all());
-      model.put("template", "templates/animal-form.vtl");
-      return new ModelAndView(model, layout);
-    }, new VelocityTemplateEngine());
-
     //add animal
     post("/animal/new", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
@@ -76,13 +67,9 @@ public class App {
           String age = request.queryParams("age");
           EndangeredAnimal endangeredAnimal = new EndangeredAnimal(name, health, age);
           endangeredAnimal.save();
-          // model.put("animals", Animal.all());
-          // model.put("endangeredAnimals", EndangeredAnimal.all());
         } else {
           Animal animal = new Animal(name);
           animal.save();
-          // model.put("animals", Animal.all());
-          // model.put("endangeredAnimals", EndangeredAnimal.all());
         }
         response.redirect("/");
       } catch (IllegalArgumentException exception) {

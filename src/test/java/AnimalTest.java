@@ -93,4 +93,9 @@ public class AnimalTest {
     testAnimal.save();
     assertTrue(Animal.all().get(0).equals(testAnimal));
   }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void animal_throwsExceptionIfAnimalHasEmptyParameters() {
+    Animal testAnimal = new Animal("");
+  }
 }
