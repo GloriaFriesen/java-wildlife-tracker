@@ -1,7 +1,13 @@
 <h4><a href="/">Home</a></h4>
 
 <h1>$endangeredAnimal.getName()</h1>
-<h4>Total Sightings: $endangeredAnimal.getSightings().size()
+<h4>Total Sightings: $endangeredAnimal.getSightings().size()</h4>
+<hr>
+
+<form action="/endangered_animal/$endangeredAnimal.getId()/delete" method="post">
+  <button class="btn btn-default" type="submit">Remove Animal</button>
+</form>
+<hr>
 
 <form action="/endangered_sighting" method="post" class="addSighting">
   <input name="endangeredAnimalSelected" type="hidden" value="$endangeredAnimal.getId()">

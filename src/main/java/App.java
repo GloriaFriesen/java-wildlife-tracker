@@ -11,6 +11,7 @@ public class App {
     staticFileLocation("/public");
     String layout = "templates/layout.vtl";
 
+    //homepage
     get("/", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("animals", Animal.all());
@@ -97,7 +98,7 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    //remove sighting from endangered animal
+    //destroy sighting from endangered animal
     post("/endangered_animal/sighting/:sighting_id/delete", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       Sighting sighting = Sighting.find(Integer.parseInt(request.params("sighting_id")));
@@ -108,7 +109,7 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    //remove sighting from animal
+    //destroy sighting from animal
     post("/animal/sighting/:sighting_id/delete", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       Sighting sighting = Sighting.find(Integer.parseInt(request.params("sighting_id")));
@@ -116,6 +117,24 @@ public class App {
       sighting.delete();
       String url = String.format("/animal/%d", animal.getId());
       response.redirect(url);
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    //destroy endangered animal
+    post("/endangered_animal/:endangered_animal_id/delete", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      EndangeredAnimal endangeredAnimal = EndangeredAnimal.find(Integer.parseInt(request.params("endangered_animal_id")));
+      endangeredAnimal.delete();
+      response.redirect("/");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    //destroy animal
+    post("/animal/:animal_id/delete", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Animal animal = Animal.find(Integer.parseInt(request.params("animal_id")));
+      animal.delete();
+      response.redirect("/");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 

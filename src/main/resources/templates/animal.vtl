@@ -2,7 +2,12 @@
 
 <h1>$animal.getName()</h1>
 <h4>Total Sightings: $animal.getSightings().size()
+<hr>
 
+<form action="/animal/$animal.getId()/delete" method="post">
+  <button class="btn btn-default" type="submit">Remove Animal</button>
+</form>
+<hr>
 
 <form action="/animal_sighting" method="post" class="addSighting">
   <input name="animalSelected" type="hidden" value="$animal.getId()">

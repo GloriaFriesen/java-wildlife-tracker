@@ -43,7 +43,7 @@
   <h3>Endangered Animal Sightings</h3>
 </div>
 #if ($endangeredAnimals.size() == 0)
-  <a href="/animal/new">Add Animal to Database to Report a Sighting</a>
+  <h4>There are currently no endangered animals in the system. Add one <a href="#animal_new">here.</a></h4>
 #else
   #foreach ($endangeredAnimal in $endangeredAnimals)
     <a href="/endangered_animal/$endangeredAnimal.getId()" class="thumbnail">
@@ -58,7 +58,7 @@
   <h3>Non-Endangered Animal Sightings</h3>
 </div>
 #if ($animals.size() == 0)
-  <a href="/animal/new">Add Animal to Database to Report a Sighting</a>
+  <h4>There are currently no non-endangered animals in the system. Add one <a href="#animal_new">here.</a></h4>
 #else
   #foreach ($animal in $animals)
     <a href="/animal/$animal.getId()" class="thumbnail">
