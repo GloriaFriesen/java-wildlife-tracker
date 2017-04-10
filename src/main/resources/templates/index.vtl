@@ -74,25 +74,32 @@
   <footer>
     <h2>Add Animal to Database</h2>
     <form action="/animal/new" method="post">
-      <label>Animal Species</label>
-      <input type="text" name="name">
+      <div class="form-group">
+        <label>Species</label>
+        <input type="text" name="name" class="form-control">
+      </div>
       <label>Endangered?</label>
       <input type="checkbox" name="endangered">
-      <h3>Additional Info for Endangered Animals:</h3>
-      <label>Health</label>
-      <select name="health">
-        <option>Ill</option>
-        <option>Okay</option>
-        <option>Healthy</option>
-      </select>
-      <label>Age</label>
-      <select name="age">
-        <option>Newborn</option>
-        <option>Young</option>
-        <option>Adult</option>
-      </select>
-      <button type="submit">Add Animal</button>
+      <h4>Additional Info for Endangered Animals:</h4>
+      <div class="form-group">
+        <label>Health</label>
+        <select name="health">
+          <option>Ill</option>
+          <option>Okay</option>
+          <option>Healthy</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Age</label>
+        <select name="age">
+          <option>Newborn</option>
+          <option>Young</option>
+          <option>Adult</option>
+        </select>
+      </div>
+      <br>
+      <button type="submit" class="btn btn-default">Add Animal</button>
     </form>
-    <a href="#home">Back to Top</a>
+    <p id="toTop"><a href="/">Back to Top</a></p>
   </footer>
 </div>
