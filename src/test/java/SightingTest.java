@@ -139,4 +139,16 @@ public class SightingTest {
     Sighting firstSighting = new Sighting (testAnimal.getId(), "", "Ranger Avery");
     Sighting secondSighting = new Sighting (testAnimal.getId(), "45.472428, -121.946466", "");
   }
+
+  @Test
+  public void update_updatesSightings_true() {
+    Animal testAnimal = new Animal("Deer");
+    Animal secondAnimal = new Animal("Fox");
+    Sighting testSighting = new Sighting (testAnimal.getId(), "45.472428, -121.946466", "Ranger Avery");
+    testSighting.save();
+    testSighting.update(secondAnimal.getId(), "Near the lake", "Ranger Abby");
+    assertEquals(secondAnimal.getId(), Sighting.find(testSighting.getId()).getAnimalId());
+    assertEquals("Near the lake", Sighting.find(testSighting.getId()).getLocation());
+    assertEquals("Ranger Abby", Sighting.find(testSighting.getId()).getRangerName());
+  }
 }

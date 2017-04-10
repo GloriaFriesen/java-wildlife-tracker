@@ -142,8 +142,11 @@ public class App {
     post("/sighting/:sighting_id/update", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       Sighting sighting = Sighting.find(Integer.parseInt(request.params("sighting_id")));
+      int animalId = Integer.parseInt(request.queryParams("animalId"));
+      String location = request.queryParams("location");
+      String rangerName = request.queryParams("rangerName");
+      sighting.update(animalId, location, rangerName);
       EndangeredAnimal endangeredAnimal = EndangeredAnimal.find(sighting.getAnimalId());
-
       String url = String.format("/endangered_animal/%d", endangeredAnimal.getId());
       response.redirect(url);
       return new ModelAndView(model, layout);
