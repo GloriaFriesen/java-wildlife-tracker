@@ -4,11 +4,18 @@
 <h4>Total Sightings: $animal.getSightings().size()
 <hr>
 
+<h3>Update or Delete $animal.getName()</h3>
+<form action="/animal/$animal.getId()/update" method="post">
+  <label>Species</label>
+  <input type="text" name="name" class="form-control" required>
+  <button class="btn btn-default" type="submit">Update Animal</button>
+</form>
 <form action="/animal/$animal.getId()/delete" method="post">
   <button class="btn btn-default" type="submit">Remove Animal</button>
 </form>
 <hr>
 
+<h3>Report Sighting of $animal.getName()</h3>
 <form action="/animal_sighting" method="post" class="addSighting">
   <input name="animalSelected" type="hidden" value="$animal.getId()">
   <label>Location</label>

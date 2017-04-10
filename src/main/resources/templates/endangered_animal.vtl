@@ -4,10 +4,16 @@
 <h4>Total Sightings: $endangeredAnimal.getSightings().size()</h4>
 <hr>
 
+<h3>Update or Delete $endangeredAnimal.getName()</h3>
+<form action="/endangered_animal/$endangeredAnimal.getId()/update" method="post">
+  <label>Species</label>
+  <input type="text" name="name" class="form-control" required>
+  <button class="btn btn-default" type="submit">Update Animal</button>
+</form>
 <form action="/endangered_animal/$endangeredAnimal.getId()/delete" method="post">
   <button class="btn btn-default" type="submit">Remove $endangeredAnimal.getName()</button>
 </form>
-<h4>
+<hr>
 
 <div class="row">
   <div class="col-md-6">

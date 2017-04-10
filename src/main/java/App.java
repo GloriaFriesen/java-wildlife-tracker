@@ -168,6 +168,28 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    //update animal
+    post("/animal/:animal_id/update", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Animal animal = Animal.find(Integer.parseInt(request.params("animal_id")));
+      String name = request.queryParams("name");
+      animal.updateName(name);
+      String url = String.format("/animal/%d", animal.getId());
+      response.redirect(url);
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    //update endangered animal
+    post("/endangered_animal/:endangered_animal_id/update", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      EndangeredAnimal endangeredAnimal = EndangeredAnimal.find(Integer.parseInt(request.params("endangered_animal_id")));
+      String name = request.queryParams("name");
+      endangeredAnimal.updateName(name);
+      String url = String.format("/endangered_animal/%d", endangeredAnimal.getId());
+      response.redirect(url);
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
     //error page
     get("/error", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();

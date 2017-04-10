@@ -114,4 +114,12 @@ public class EndangeredAnimalTest {
   public void endangeredAnimal_throwsExceptionIfEndangeredAnimalHasEmptyParameters() {
     EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("", "Healthy", "Young");
   }
+
+  @Test
+  public void update_updatesNameAttribute_true() {
+    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Fox", "Healthy", "Young");
+    testEndangeredAnimal.save();
+    testEndangeredAnimal.updateName("Cat");
+    assertEquals("Cat", EndangeredAnimal.find(testEndangeredAnimal.getId()).getName());
+  }
 }
