@@ -17,6 +17,9 @@ public class EndangeredAnimal implements DatabaseManagement {
   public static final String LOW_AGE = "Newborn";
 
   public EndangeredAnimal(String name, String health, String age) {
+    if (name.equals("")) {
+      throw new IllegalArgumentException("Please include the animal's name to add an endangered animal.");
+    }
     this.name = name;
     this.id = id;
     this.health = health;

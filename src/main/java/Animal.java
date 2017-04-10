@@ -7,6 +7,9 @@ public class Animal implements DatabaseManagement {
   public int id;
 
   public Animal(String name) {
+    if (name.equals("")) {
+      throw new IllegalArgumentException("Please include the animal's name to add an animal.");
+    }
     this.name = name;
     this.id = id;
   }

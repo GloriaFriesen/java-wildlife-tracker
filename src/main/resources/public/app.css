@@ -4,6 +4,11 @@ body {
 }
 
 .title {
-  background-color: lightgrey;
+  background-color: #8BB0B5;
   border: 2px;
+  padding: 2px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  margin-top: 10px;
+  text-align: center;
 }

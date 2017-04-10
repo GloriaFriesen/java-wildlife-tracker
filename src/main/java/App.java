@@ -26,10 +26,15 @@ public class App {
       String rangerName = request.queryParams("rangerName");
       EndangeredAnimal endangeredAnimal = EndangeredAnimal.find(Integer.parseInt(request.queryParams("endangeredAnimalSelected")));
       String latLong = request.queryParams("latLong");
-      Sighting sighting = new Sighting(endangeredAnimal.getId(), latLong, rangerName);
-      sighting.save();
-      String url = String.format("/endangered_animal/%d", endangeredAnimal.getId());
-      response.redirect(url);
+      try {
+        Sighting sighting = new Sighting(endangeredAnimal.getId(), latLong, rangerName);
+        sighting.save();
+        String url = String.format("/endangered_animal/%d", endangeredAnimal.getId());
+        response.redirect(url);
+      } catch (IllegalArgumentException exception) {
+        exception.getMessage();
+        response.redirect("/error");
+      }
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -39,13 +44,19 @@ public class App {
       String rangerName = request.queryParams("rangerName");
       int animalIdSelected = Integer.parseInt(request.queryParams("animalSelected"));
       String latLong = request.queryParams("latLong");
-      Sighting sighting = new Sighting(animalIdSelected, latLong, rangerName);
-      sighting.save();
-      String url = String.format("/animal/%d", animalIdSelected);
-      response.redirect(url);
+      try {
+        Sighting sighting = new Sighting(animalIdSelected, latLong, rangerName);
+        sighting.save();
+        String url = String.format("/animal/%d", animalIdSelected);
+        response.redirect(url);
+      } catch (IllegalArgumentException exception) {
+        exception.getMessage();
+        response.redirect("/error");
+      }
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    //add animal form
     get("/animal/new", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("animals", Animal.all());
@@ -54,28 +65,34 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    //add animal
     post("/animal/new", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       boolean endangered = request.queryParamsValues("endangered")!=null;
-      if (endangered) {
-        String name = request.queryParams("name");
-        String health = request.queryParams("health");
-        String age = request.queryParams("age");
-        EndangeredAnimal endangeredAnimal = new EndangeredAnimal(name, health, age);
-        endangeredAnimal.save();
-        model.put("animals", Animal.all());
-        model.put("endangeredAnimals", EndangeredAnimal.all());
-      } else {
-        String name = request.queryParams("name");
-        Animal animal = new Animal(name);
-        animal.save();
-        model.put("animals", Animal.all());
-        model.put("endangeredAnimals", EndangeredAnimal.all());
+      String name = request.queryParams("name");
+      try {
+        if (endangered) {
+          String health = request.queryParams("health");
+          String age = request.queryParams("age");
+          EndangeredAnimal endangeredAnimal = new EndangeredAnimal(name, health, age);
+          endangeredAnimal.save();
+          // model.put("animals", Animal.all());
+          // model.put("endangeredAnimals", EndangeredAnimal.all());
+        } else {
+          Animal animal = new Animal(name);
+          animal.save();
+          // model.put("animals", Animal.all());
+          // model.put("endangeredAnimals", EndangeredAnimal.all());
+        }
+        response.redirect("/");
+      } catch (IllegalArgumentException exception) {
+        exception.getMessage();
+        response.redirect("/error");
       }
-      response.redirect("/");
-        return null;
-      });
+      return new ModelAndView(model, layout);
+      }, new VelocityTemplateEngine());
 
+    //view animal
     get("/animal/:id", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       Animal animal = Animal.find(Integer.parseInt(request.params("id")));
@@ -84,17 +101,12 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    //view endangered animal
     get("/endangered_animal/:id", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       EndangeredAnimal endangeredAnimal = EndangeredAnimal.find(Integer.parseInt(request.params("id")));
       model.put("endangeredAnimal", endangeredAnimal);
       model.put("template", "templates/endangered_animal.vtl");
-      return new ModelAndView(model, layout);
-    }, new VelocityTemplateEngine());
-
-    get("/error", (request, response) -> {
-      Map<String, Object> model = new HashMap<String, Object>();
-      model.put("template", "templates/error.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -128,6 +140,13 @@ public class App {
 
       String url = String.format("/endangered_animal/%d", endangeredAnimal.getId());
       response.redirect(url);
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    //error page
+    get("/error", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("template", "templates/error.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
   }

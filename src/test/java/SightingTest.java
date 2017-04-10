@@ -131,8 +131,12 @@ public class SightingTest {
     Date date = new Date();
     String formattedDate = new SimpleDateFormat("EEE, d MMM yyyy hh:mm aaa").format(date);
     assertEquals(formattedDate, sightingTime);
+  }
 
-
-
+  @Test(expected = IllegalArgumentException.class)
+  public void sighting_throwsExceptionIfSightingHasEmptyLocationOrRanger() {
+    Animal testAnimal = new Animal("Deer");
+    Sighting firstSighting = new Sighting (testAnimal.getId(), "", "Ranger Avery");
+    Sighting secondSighting = new Sighting (testAnimal.getId(), "45.472428, -121.946466", "");
   }
 }

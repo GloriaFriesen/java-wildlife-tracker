@@ -14,6 +14,9 @@ public class Sighting implements DatabaseManagement {
   private Timestamp time_seen;
 
   public Sighting(int animal_id, String location, String ranger_name) {
+    if (location.equals("") || ranger_name.equals("")) {
+      throw new IllegalArgumentException("Please complete the form to submit a sighting.");
+    }
     this.animal_id = animal_id;
     this.location = location;
     this.ranger_name = ranger_name;
